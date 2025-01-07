@@ -11,14 +11,11 @@ library(dplyr)
 measurements <- read.csv("measurements.csv")
 
 # Add a new column for Volume
-# Assuming a simple formula for limb volume (e.g., cylinder approximation: π * r^2 * h)
-# Using Limb_width as diameter, so radius = Limb_width / 2
+# Assuming a simple formula for limb volume 
+# (Approximating limb as a cylinder)
+# Equation for volume: Volume = pi * (Limb_width / 2)^2 * Limb_length
 measurements <- measurements %>%
-  mutate(
-    Radius = Limb_width / 2,
-    Volume = pi * (Radius^2) * Limb_length
-  ) %>%
-  select(-Radius) 
+  mutate(Volume = pi * (Limb_width / 2)^2 * Limb_length) 
 
 # Overwrite the original measurements.csv file with the updated data
 write.csv(measurements, "measurements.csv", row.names = FALSE)

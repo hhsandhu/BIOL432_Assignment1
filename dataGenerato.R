@@ -14,17 +14,17 @@ species <- c("Homo sapiens", "Pan troglodytes", "Canis lupus", "Felis catus", "I
 set.seed(123) # For reproducibility
 random_species <- sample(species, 100, replace = TRUE)
 
-# Step 3: Generate 100 random Limb_width values 
+# Generate 100 random Limb_width values 
 limb_width <- rnorm(100, mean = 5, sd = 1) 
 limb_width <- abs(limb_width) # make sure no negative values
 
-# Step 4: Generate 100 random Limb_length values 
+# Generate 100 random Limb_length values 
 limb_length <- runif(100, min = 10, max = 50) 
 
-# Step 5: Create a vector of 3 observer names
+# Create a vector of 3 observer names
 observers <- c("Phil", "Claire", "Mitchell")
 
-# Step 6: Assign an observer to each measurement
+# Assign an observer to each measurement
 random_observers <- sample(observers, 100, replace = TRUE)
 
 # Combine vectors into a data frame
@@ -36,6 +36,6 @@ measurements <- data.frame(
 )
 
 # Save the data frame as a CSV file
-write.csv(measurements, "measurements.csv", row.names = FALSE)
+write.csv(measurements, "measurements.csv", row.names = FALSE) 
 
 

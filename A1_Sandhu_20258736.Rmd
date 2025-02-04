@@ -1,0 +1,83 @@
+---
+title: "Assignment 1 Report"
+author: "Harnaaz Sandhu"
+date: "2025-01-07"
+output: html_document
+---
+GitHub repository for this assignment- 
+https://github.com/hhsandhu/BIOL432_Assignment1 
+
+# Introduction
+
+This report summarizes the results of generating limb measurements and estimating limb volumes for hypothetical organisms.
+
+# Part 1: Generate Limb Measurements
+
+I used the script `dataGenerato.R` to create a dataset of limb measurements. This script randomly generated species names, limb widths, limb lengths, and observer names, and saved them in a file called `measurements.csv`.
+
+# Part 2: Estimate Limb Volumes
+
+I used the script volumeEstimato.R to calculate limb volumes based on the limb width and length, and updated the measurements.csv file with a new column for Volume. 
+
+Source the script to generate data
+```{r, echo=TRUE}
+source("dataGenerato.R")
+```
+
+Source the script to estimate limb volumes
+```{r, echo=TRUE}
+source("volumeEstimato.R")
+```
+
+# Part 3: Analyze the Data
+
+```{r, echo=TRUE}
+library(dplyr)
+data <- read.csv("measurements.csv")
+sorted_data <- data %>%
+  arrange(Organism, Observer, Volume)
+head(sorted_data)
+```
+
+Table showing the average limb volume for each species.
+```{r, echo=TRUE}
+average_volume <- data %>%
+  group_by(Organism) %>%
+  summarize(Average_Volume = mean(Volume))
+average_volume
+```
+
+Table showing the number of observations for each combination of species and observer.
+```{r, echo=TRUE}
+observations <- data %>%
+  group_by(Organism, Observer) %>%
+  summarize(Count = n())
+observations
+```
+
+Boxplot to compare the distribution of limb volumes for each species.
+```{r, echo=TRUE}
+library(ggplot2)
+
+ggplot(data, aes(x = Organism, y = Volume)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Limb Volume by Species", x = "Species", y = "Volume")
+```
+
+Multi-panel histogram showing the distribution of limb volumes for each species
+```{r, echo=TRUE}
+library(ggplot2)
+
+ggplot(data, aes(x = Volume)) +
+  geom_histogram(binwidth = 10, fill = "skyblue", color = "black") +
+  facet_wrap(~ Organism, scales = "free") +
+  theme_minimal() +
+  labs(
+    title = "Distribution of Limb Volumes by Species",
+    x = "Volume",
+    y = "Frequency"
+  )
+```
+
+
